@@ -27,9 +27,10 @@ chrome.storage.sync.get(['mfClassList'], function(result) {
   var classList = result.mfClassList;
 
   for (const c in classList) {
-    document.querySelector('.classes').innerHTML += `<li class="list-group-item"><span class="className ${c}" contenteditable="true" data-id="${c}">${classList[c]}</span> <img src="/img/edit.png" class="mt-n1" style="cursor: pointer;" height="15px;" id="edit${c}" data-id="${c}"> <img src="img/delete.png" class="mt-n1 remove" style="cursor: pointer;" data-id="${c}" height="15px;"></li>`;
+    document.querySelector('.classes').innerHTML += `<li class="list-group-item"><span id="span${c}" class="className" contenteditable="true" data-id="${c}">${classList[c]}</span> <img src="/img/edit.png" class="mt-n1 edit" style="cursor: pointer;" height="15px;" id="edit${c}" data-id="${c}"> <img src="img/delete.png" class="mt-n1 remove" style="cursor: pointer;" data-id="${c}" height="15px;"></li>`;
   }
 
+  //Delete classes
   document.querySelectorAll('.remove').forEach(btn => {
     btn.onclick = () => {
       const classId = btn.dataset.id;
@@ -41,11 +42,15 @@ chrome.storage.sync.get(['mfClassList'], function(result) {
     };
   });
 
+  //Change class names
   document.querySelectorAll('.className').forEach(spanName => {
       spanName.addEventListener('input', function() {
-            document.getElementById("edit"+spanName.dataset.id).src = "/img/submit.png";
-            document.getElementById("edit"+spanName.dataset.id).classList.add('submit');
+          //Change the edit icon to submit icon
+          document.getElementById("edit"+spanName.dataset.id).src = "img/submit.png";
+          document.getElementById("edit"+spanName.dataset.id).classList.add('submit');
+          document.getElementById("edit"+spanName.dataset.id).classList.remove('edit');
 
+            //Update class names when submit icon is clicked
             document.querySelectorAll('.submit').forEach(btn => {
               btn.onclick = () => {
                   var newName = spanName.innerText;
@@ -55,12 +60,25 @@ chrome.storage.sync.get(['mfClassList'], function(result) {
                     console.log("Updated");
                     console.log(classList);
                   });
-                  document.getElementById("edit"+spanName.dataset.id).src = "/img/edit.png";
+
+                  //change the submit icon to edit icon
+                  document.getElementById("edit"+spanName.dataset.id).src = "img/edit.png";
                   document.getElementById("edit"+spanName.dataset.id).classList.remove('submit');
+                  document.getElementById("edit"+spanName.dataset.id).classList.add('edit');
               };
             });
 
         });
+  });
+
+  //Highlighting classes when edit button is clicked
+  document.querySelectorAll('.edit').forEach(btn => {
+    btn.onclick = () => {
+      var focusSpan = document.getElementById("span"+btn.dataset.id);
+        setTimeout(function() {
+          focusSpan.focus();
+        }, 0);
+    };
   });
 
 
