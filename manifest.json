@@ -1,0 +1,18 @@
+{
+"manifest_version": 2,
+  "name": "BetterBac",
+  "version": "0.1.1",
+  "description": "Manage your ManageBac downloads by subject.",
+  "permissions": ["downloads", "downloads.open", "tabs", "activeTab", "declarativeContent", "storage"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": "popup.png"
+},
+"icons": {
+      "128": "icon.png"
+    }
+}
