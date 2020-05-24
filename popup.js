@@ -27,7 +27,7 @@ chrome.storage.sync.get(['mfClassList'], function(result) {
   var classList = result.mfClassList;
 
   for (const c in classList) {
-    document.querySelector('.classes').innerHTML += `<li class="list-group-item"><span class="className ${c}" contenteditable="true" data-id="${c}">${classList[c]}</span> <img src="edit.png" class="mt-n1" style="cursor: pointer;" height="15px;" id="edit${c}" data-id="${c}"> <img src="delete.png" class="mt-n1 remove" style="cursor: pointer;" data-id="${c}" height="15px;"></li>`;
+    document.querySelector('.classes').innerHTML += `<li class="list-group-item"><span class="className ${c}" contenteditable="true" data-id="${c}">${classList[c]}</span> <img src="/img/edit.png" class="mt-n1" style="cursor: pointer;" height="15px;" id="edit${c}" data-id="${c}"> <img src="img/delete.png" class="mt-n1 remove" style="cursor: pointer;" data-id="${c}" height="15px;"></li>`;
   }
 
   document.querySelectorAll('.remove').forEach(btn => {
@@ -43,7 +43,7 @@ chrome.storage.sync.get(['mfClassList'], function(result) {
 
   document.querySelectorAll('.className').forEach(spanName => {
       spanName.addEventListener('input', function() {
-            document.getElementById("edit"+spanName.dataset.id).src = "submit.png";
+            document.getElementById("edit"+spanName.dataset.id).src = "/img/submit.png";
             document.getElementById("edit"+spanName.dataset.id).classList.add('submit');
 
             document.querySelectorAll('.submit').forEach(btn => {
@@ -55,7 +55,7 @@ chrome.storage.sync.get(['mfClassList'], function(result) {
                     console.log("Updated");
                     console.log(classList);
                   });
-                  document.getElementById("edit"+spanName.dataset.id).src = "edit.png";
+                  document.getElementById("edit"+spanName.dataset.id).src = "/img/edit.png";
                   document.getElementById("edit"+spanName.dataset.id).classList.remove('submit');
               };
             });
